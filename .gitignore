@@ -1,0 +1,11 @@
+.venv/
+dist/
+__pycache__/
+*.pyc
+*.pyo
+*.core
+gpucore.*
+*.log
+*.log.1
+linux-vcam-pro-backup-*
+linux-vcam-pro-gpu-stable-*

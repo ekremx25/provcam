@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.ekrem.provcam.desktop</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>LicenseRef-proprietary</project_license>
+  <name>ProVCam</name>
+  <developer id="io.github.ekrem">
+    <name>Ekrem</name>
+  </developer>
+  <summary>AMD GPU destekli sanal kamera ve arka plan ayrıştırma aracı</summary>
+  <description>
+    <p>
+      ProVCam, Linux üzerinde AMD GPU ile çalışan bir sanal kamera uygulamasıdır.
+      Arka planı bulanıklaştırabilir, sabit bir görselle değiştirebilir veya OBS ile
+      birlikte green-screen akışında kullanılabilir.
+    </p>
+    <p>
+      Uygulama tek tıklık kurulum, masaüstü başlatıcısı ve PyTorch ROCm tabanlı
+      matting backend'i ile birlikte gelir.
+    </p>
+  </description>
+  <launchable type="desktop-id">io.github.ekrem.provcam.desktop</launchable>
+  <categories>
+    <category>AudioVideo</category>
+    <category>Video</category>
+  </categories>
+  <releases>
+    <release version="1.0.0" date="2026-03-15"/>
+  </releases>
+  <content_rating type="oars-1.1"/>
+</component>
