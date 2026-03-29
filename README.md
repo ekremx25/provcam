@@ -14,6 +14,20 @@
 
 ---
 
+## Demo
+
+<p align="center">
+  <video src="https://github.com/ekremx25/provcam/releases/download/v0.1.0/provcam-demo-720p.mp4" width="720" controls>
+    Your browser does not support the video tag.
+  </video>
+</p>
+
+https://github.com/user-attachments/assets/provcam-demo
+
+https://github.com/ekremx25/provcam/releases/download/v0.1.0/provcam-demo-720p.mp4
+
+---
+
 ## What is this?
 
 ProVCam is a virtual camera application for Linux that uses **AI-powered real-time background removal** and replacement. It works with any video conferencing app (Zoom, Google Meet, Discord, OBS, etc.) by creating a virtual `/dev/video` device.
