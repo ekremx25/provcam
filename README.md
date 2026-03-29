@@ -16,15 +16,7 @@
 
 ## Demo
 
-<p align="center">
-  <video src="https://github.com/ekremx25/provcam/releases/download/v0.1.0/provcam-demo-720p.mp4" width="720" controls>
-    Your browser does not support the video tag.
-  </video>
-</p>
-
-https://github.com/user-attachments/assets/provcam-demo
-
-https://github.com/ekremx25/provcam/releases/download/v0.1.0/provcam-demo-720p.mp4
+https://github.com/ekremx25/provcam/raw/main/assets/provcam-demo.mp4
 
 ---
 
