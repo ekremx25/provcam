@@ -51,11 +51,22 @@ Physical Camera → AI Model (ROCm GPU) → Background Replacement → Virtual C
                                                                   Zoom / Meet / OBS
 ```
 
+## Two Editions
+
+| Edition | File | Language | Description |
+|---------|------|----------|-------------|
+| **ProVCam** | `ProVCam-x86_64.AppImage` | Rust + Python | Main edition. Rust binary for camera capture & video processing, Python for AI model & GUI. Faster, lower resource usage. |
+| **Python ProVCam** | `Python-ProVCam-x86_64.AppImage` | Pure Python | Fully Python-based. Easier to modify and extend. Uses PyTorch ROCm for GPU acceleration. |
+
+Both editions use the same AI model ([RobustVideoMatting](https://github.com/PeterL1n/RobustVideoMatting)) and produce identical output quality.
+
 ## Installation
 
 ### AppImage (Recommended)
 
-1. Download `ProVCam-x86_64.AppImage` from [Releases](https://github.com/ekremx25/provcam/releases)
+1. Download your preferred edition from [Releases](https://github.com/ekremx25/provcam/releases):
+   - **`ProVCam-x86_64.AppImage`** — Rust + Python (recommended)
+   - **`Python-ProVCam-x86_64.AppImage`** — Pure Python
 2. Make executable and run:
    ```bash
    chmod +x ProVCam-x86_64.AppImage
