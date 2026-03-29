@@ -16,13 +16,11 @@
 
 ## Demo
 
-<p align="center">
-  <a href="https://github.com/ekremx25/provcam/releases/download/v0.1.0/provcam-demo-720p.mp4">
-    <img src="assets/provcam-demo.gif" alt="Click to watch demo" width="640">
-    <br>
-    ▶ Demo Videoyu İzle
-  </a>
-</p>
+
+
+https://github.com/user-attachments/assets/03c9a519-4ffa-466f-a032-6c5f26cd01f5
+
+
 
 ---
 
