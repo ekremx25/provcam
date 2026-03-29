@@ -16,7 +16,9 @@
 
 ## Demo
 
-https://github.com/ekremx25/provcam/raw/main/assets/provcam-demo.mp4
+<p align="center">
+  <img src="assets/provcam-demo.gif" alt="ProVCam Demo" width="640">
+</p>
 
 ---
 
