@@ -9,165 +9,88 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/ekremx25/provcam/releases">Download AppImage</a>
+  <em>Runs on AMD Radeon (ROCm) · drops straight into Zoom / OBS / Meet / Discord</em>
 </p>
 
 ---
 
 ## Demo
 
-
-
 https://github.com/user-attachments/assets/03c9a519-4ffa-466f-a032-6c5f26cd01f5
-
-
 
 ---
 
-## What is this?
+## Download
 
-ProVCam is a virtual camera application for Linux that uses **AI-powered real-time background removal** and replacement. It works with any video conferencing app (Zoom, Google Meet, Discord, OBS, etc.) by creating a virtual `/dev/video` device.
+Two editions ship side-by-side. Pick one, make it executable, run it.
 
-Powered by [RobustVideoMatting](https://github.com/PeterL1n/RobustVideoMatting) with **AMD ROCm GPU acceleration** via PyTorch.
-
-## Features
-
-- **Real-time AI background removal** using RobustVideoMatting model
-- **Background modes**: Image, blur, solid color, transparent
-- **AMD ROCm GPU acceleration** via PyTorch (falls back to CPU)
-- **Virtual camera output** via v4l2loopback (`/dev/videoN`)
-- **GUI control panel** with resolution, FPS, background settings
-- **Multiple resolutions**: 640x360 to 1920x1080
-- **Configurable FPS**: Input and output FPS control
-- **Auto-start on boot** option
-- **AppImage packaging** - single file, no install needed
-
-## How It Works
-
-```
-Physical Camera → AI Model (ROCm GPU) → Background Replacement → Virtual Camera
-   /dev/video0      RobustVideoMatting        Image/Blur/Color      /dev/video2
-                                                                         ↓
-                                                                  Zoom / Meet / OBS
-```
-
-## Two Editions
-
-| Edition | File | Language | Description |
-|---------|------|----------|-------------|
-| **ProVCam** | `ProVCam-x86_64.AppImage` | Rust + Python | Main edition. Rust binary for camera capture & video processing, Python for AI model & GUI. Faster, lower resource usage. |
-| **Python ProVCam** | `Python-ProVCam-x86_64.AppImage` | Pure Python | Fully Python-based. Easier to modify and extend. Uses PyTorch ROCm for GPU acceleration. |
-
-Both editions use the same AI model ([RobustVideoMatting](https://github.com/PeterL1n/RobustVideoMatting)) and produce identical output quality.
-
-## Installation
-
-### AppImage (Recommended)
-
-1. Download your preferred edition from [Releases](https://github.com/ekremx25/provcam/releases):
-   - **`ProVCam-x86_64.AppImage`** — Rust + Python (recommended)
-   - **`Python-ProVCam-x86_64.AppImage`** — Pure Python
-2. Make executable and run:
-   ```bash
-   chmod +x ProVCam-x86_64.AppImage
-   ./ProVCam-x86_64.AppImage
-   ```
-
-### Requirements
-
-- **Linux** (x86_64)
-- **v4l2loopback** kernel module (for virtual camera device)
-- **ffmpeg** (for video output)
-- **Python 3** with PyTorch ROCm (for GPU acceleration)
-
-#### Setup v4l2loopback
+| Edition | File | Size | Backend | When to pick |
+|---|---|---|---|---|
+| **Rust** (recommended) | [`ProVCam-Rust-x86_64.AppImage`](ProVCam-Rust-x86_64.AppImage) | ~1.1 MB | Rust inference + Python fallback | Faster startup, lower RAM, single binary |
+| **Python** | [`ProVCam-Python-x86_64.AppImage`](ProVCam-Python-x86_64.AppImage) | ~230 KB | Pure Python / PyTorch | Easier to modify and extend |
 
 ```bash
-# Install
-sudo pacman -S v4l2loopback-dkms  # Arch
-# sudo apt install v4l2loopback-dkms  # Ubuntu
-
-# Load module
-sudo modprobe v4l2loopback devices=1 video_nr=2 card_label="ProVCam" exclusive_caps=1
+# Rust edition (recommended)
+chmod +x ProVCam-Rust-x86_64.AppImage
+./ProVCam-Rust-x86_64.AppImage
 ```
 
-### Build from Source
+First run copies the payload to `~/.local/share/provcam/` and opens the installer (creates the `.venv`, installs PyTorch ROCm, pre-caches the AI model). Later runs go straight to the GUI.
+
+---
+
+## What is it
+
+ProVCam takes your physical webcam (or a phone camera via Iriun), runs [RobustVideoMatting](https://github.com/PeterL1n/RobustVideoMatting) to remove the background, composites the foreground onto a blurred / green / black / custom image, and pipes the result into a `v4l2loopback` device that any Linux app can treat as a regular webcam.
+
+Built for **AMD Radeon** cards where ONNX Runtime's ROCm support is missing. Falls back to CPU when ROCm isn't available.
+
+### Features
+
+- 🎭 AI background removal — RVM models, cached for offline use
+- 🖼 Background modes: blur, custom image, green, black
+- 🎚 Matte profiles: `clean`, `balanced`, `soft`
+- ⚡ AMD GPU acceleration via PyTorch ROCm (FP16 when supported)
+- 🛡 Supervisor with automatic fps/resolution downgrade on failures
+- 🧩 Zero-copy IPC (`mmap` seqlock) between capture / inference / output processes
+- 🖱 CustomTkinter GUI with live preview
+- 📦 Self-contained AppImage — no manual install required
+
+---
+
+## Requirements
+
+- Linux with **Wayland or X11**
+- **AMD Radeon** GPU with ROCm support (or any GPU for CPU fallback)
+- **`v4l2loopback`** kernel module — the first-run installer sets it up for you
+- Python 3.9+ and `tk` (installed automatically into the app's own venv)
+
+---
+
+## Troubleshooting
+
+The installer covers the common cases (venv, PyTorch ROCm, `v4l2loopback`, Iriun autostart). If something goes wrong:
+
+- **No `ProVCam Output` in Zoom/OBS** — `v4l2loopback` isn't loaded. Run `setup_boot_autostart.sh` from `~/.local/share/provcam/app/` once.
+- **Permission denied on `/dev/video2`** — add your user to the `video` group: `sudo usermod -aG video "$USER"` (log out & back in).
+- **GPU not detected** — verify `rocminfo` shows your GPU; reinstall the matching PyTorch ROCm wheel.
+
+Logs live at `~/.cache/provcam/provcam_gpu.log`.
+
+---
+
+## Source code
+
+This repository ships the **prebuilt AppImages only**. The source tree (Python backend, shell launchers, Rust inference crate, build scripts) lives at **`~/.local/share/provcam/app/`** on any machine that has run the AppImage once — it's self-extracting. From there:
 
 ```bash
-git clone https://github.com/ekremx25/provcam.git
-cd provcam
-
-# Setup Python environment
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements-python-rocm.txt
-pip install torch torchvision --index-url https://download.pytorch.org/whl/rocm6.3
-
-# Run
-./launch_provcam_gui.sh
+cd ~/.local/share/provcam/app
+./build_appimage.sh        # rebuild your own AppImage
+pytest tests/              # run the test suite
 ```
 
-## Usage
+---
 
-### GUI Mode
-```bash
-./launch_provcam_gui.sh
-```
-Opens a control panel where you can:
-- Select camera and resolution
-- Choose background mode (image/blur/color)
-- Pick background image
-- Start/stop the virtual camera
-- Monitor status and logs
+## Licence
 
-### CLI Mode
-```bash
-./run_provcam_rocm.sh \
-  --camera-id 0 \
-  --width 960 --height 540 \
-  --fps 30 \
-  --output-fps 60 \
-  --output-device /dev/video2 \
-  --background image \
-  --background-image ~/Pictures/background.png
-```
-
-## Project Structure
-
-```
-├── python/
-│   ├── provcam_capture_proxy.py   # Camera capture
-│   ├── provcam_gui.py             # Tkinter GUI
-│   ├── provcam_installer.py       # Setup helper
-│   ├── provcam_io.py              # I/O handling
-│   ├── provcam_output_writer.py   # Virtual camera output
-│   ├── provcam_reset_output.py    # Reset output device
-│   └── provcam_rocm.py            # ROCm GPU inference
-├── scripts/
-│   ├── provcam_appimage_launcher.sh
-│   ├── provcam_reload_loopback_root.sh
-│   └── provcam_supervisor.sh
-├── assets/
-│   ├── provcam.svg                # App icon
-│   └── provcam.appdata.xml        # AppStream metadata
-├── launch_provcam_app.sh          # Start virtual camera
-├── launch_provcam_gui.sh          # Start GUI
-├── stop_provcam_app.sh            # Stop virtual camera
-├── setup_provcam.sh               # Initial setup
-├── build_appimage.sh              # Build AppImage
-└── PYTHON_BACKEND.md              # ROCm backend docs
-```
-
-## Tech Stack
-
-| Component | Technology |
-|-----------|-----------|
-| AI Model | RobustVideoMatting (TorchHub) |
-| GPU Acceleration | AMD ROCm + PyTorch |
-| Virtual Camera | v4l2loopback + ffmpeg |
-| GUI | Python Tkinter |
-| Packaging | AppImage |
-
-## License
-
-MIT
+[MIT](LICENSE) — do what you want, just don't claim warranty.
