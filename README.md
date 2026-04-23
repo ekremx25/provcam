@@ -63,7 +63,21 @@ Built for **AMD Radeon** cards where ONNX Runtime's ROCm support is missing. Fal
 - Linux with **Wayland or X11**
 - **AMD Radeon** GPU with ROCm support (or any GPU for CPU fallback)
 - **`v4l2loopback`** kernel module — the first-run installer sets it up for you
-- Python 3.9+ and `tk` (installed automatically into the app's own venv)
+- **Python 3.9+**
+- **`tk`** — Tkinter runtime for the GUI. Install once:
+
+  ```bash
+  # Arch / Manjaro
+  yay -S tk            # or: sudo pacman -S tk
+
+  # Debian / Ubuntu
+  sudo apt install python3-tk
+
+  # Fedora
+  sudo dnf install python3-tkinter
+  ```
+
+  All other Python dependencies (PyTorch ROCm, OpenCV, CustomTkinter, numpy) are installed automatically into the app's own venv on first run.
 
 ---
 
