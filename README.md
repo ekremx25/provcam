@@ -105,6 +105,13 @@ pytest tests/              # run the test suite
 
 ---
 
+## Links
+
+- YouTube tutorials and Linux desktop videos: [@linuxlifex](https://www.youtube.com/@linuxlifex)
+- GitHub profile: [ekremx25](https://github.com/ekremx25)
+
+---
+
 ## Licence
 
 [MIT](LICENSE) — do what you want, just don't claim warranty.
