@@ -1,16 +1,24 @@
-# ProVCam
-
+# ProVCam - AI Virtual Camera for Linux
 <p align="center">
   <img src="assets/provcam.svg" width="128" alt="ProVCam">
 </p>
 
 <p align="center">
-  <strong>Virtual Camera with AI Background Replacement for Linux</strong>
+  <strong>AI virtual camera for Linux with real-time background replacement</strong>
 </p>
 
 <p align="center">
-  <em>Runs on AMD Radeon (ROCm) · drops straight into Zoom / OBS / Meet / Discord</em>
+  <em>Runs on AMD Radeon (ROCm) · drops straight into OBS / Zoom / Google Meet / Discord</em>
 </p>
+
+ProVCam is an AI virtual camera for Linux that provides real-time background replacement, blur, green screen, and webcam output through `v4l2loopback`. It is designed for Wayland and X11 desktops, ships as AppImage builds, and works with OBS, Zoom, Google Meet, Discord, and other webcam-enabled apps.
+
+
+---
+
+## Keywords
+
+`linux` · `virtual-camera` · `webcam` · `v4l2loopback` · `background-replacement` · `ai-background-removal` · `rocm` · `amd` · `appimage` · `obs` · `zoom` · `wayland` · `python` · `rust` · `video`
 
 ---
 
